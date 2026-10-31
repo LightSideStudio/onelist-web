@@ -10,6 +10,7 @@ cada uno está en COPY, PRIVACY y SUPPORT. Escribe:
 """
 import html
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = "https://lightsidestudio.github.io/onelist-web/"
@@ -244,7 +245,7 @@ def document(c, kind):
         t = SUPPORT[c["lang"]]
         body = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in t["faq"])
         meta = ""
-    return head(c, f"{t['title']} · OneList", t["intro"][:150], c["pages"][kind], up) + f"""
+    return head(c, f"{t['title']} · OneList", re.sub(r"<[^>]+>", "", t["intro"])[:150], c["pages"][kind], up) + f"""
 <main class="doc wrap">
   <h1>{t['title']}</h1>{meta}<p class="intro">{t['intro']}</p>
   {body}
